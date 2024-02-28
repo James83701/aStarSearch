@@ -24,6 +24,10 @@ public class Node {
 	public void setParent(Node n){
 		parent = n;
 	}
+
+	public void setType(int value){
+		type = value;
+	}
 	
 	//accessor methods to get values
 	public int getF(){
@@ -43,6 +47,10 @@ public class Node {
 	}
 	public int getCol(){
 		return col;
+	}
+
+	public int getType(){
+		return type;
 	}
 	
 	public boolean equals(Object in){
