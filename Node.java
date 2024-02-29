@@ -8,13 +8,11 @@ public class Node {
 		col = c;
 		type = t;
 		parent = null;
-		//type 0 is traverseable, 1 is not
+		//type 0 is traverseable, 1 is not, 2 is start, 3 is goal
 	}
 	
 	//mutator methods to set values
-	public void setF(){
-		f = g + h;
-	}
+	
 	public void setG(int value){
 		g = value;
 	}
@@ -28,10 +26,11 @@ public class Node {
 	public void setType(int value){
 		type = value;
 	}
+
 	
 	//accessor methods to get values
 	public int getF(){
-		return f;
+		return g + h;
 	}
 	public int getG(){
 		return g;
