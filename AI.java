@@ -1,13 +1,18 @@
 import java.util.ArrayList;
+import java.lang.Math;
 public class AI {
     ArrayList<Node> explored = new ArrayList<Node>();
     ArrayList<Node> frontier = new ArrayList<Node>();
     Node currentNode;
+    Node startNode;
     Board board;
     Node[][] boardArr;
+    Node goalNode;
     
-    AI(Node startNode, Board board, Node[][] boardArr){
+    AI(Node startNode, Board board, Node[][] boardArr, Node goalNode){
         currentNode = startNode;
+        this.startNode = startNode;
+        this.goalNode = goalNode;
         this.board = board;
         this.boardArr = boardArr; 
         frontier.add(currentNode);
@@ -50,10 +55,12 @@ public class AI {
     }
 
     public Node findLowestFScoreNodeInFrontier(){
+        //System.out.println(frontier);
         if (frontier.get(0) == null) {
             frontier.addAll(getAdjNodes(currentNode));
+            
         }
-        calculateScores()////
+        //calculateScores();////
         Node lowestCostNode = frontier.get(0);
         for (Node node : frontier) {
             if(node.getF()<lowestCostNode.getF()){
@@ -65,8 +72,17 @@ public class AI {
         return lowestCostNode;
     }
 
-    public void NorthNode(){
-
+    public void calculateScores(){
+        for (Node node : frontier){
+            
+            
+            //vvv calculates estimated H cost for each node in frontier 
+            int colDistance = Math.abs(node.getCol() - goalNode.getCol());
+            int rowDistance = Math.abs(node.getRow() - goalNode.getRow());
+            int estimatedCost = (int) Math.sqrt((colDistance*colDistance) + (rowDistance*rowDistance));
+            node.setH(estimatedCost);
+            
+        }
     }
 
     public void nextStep(){

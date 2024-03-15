@@ -7,7 +7,7 @@ public class Board {
 
     Node[][] boardArr = new Node[15][15];
     Node start;
-    
+    Node goal;
     Board(){
         initFill();
     }
@@ -61,10 +61,15 @@ public class Board {
         int col = rand.nextInt(15);
         int row = rand.nextInt(15);
         boardArr[row][col].setType(3);
+        goal = boardArr[row][col];
     }      
 
     public Node getStartNode(){
         return start;
+    }
+
+    public Node getGoalNode(){
+        return goal;
     }
 
     public Node[][] getBoardArr(){

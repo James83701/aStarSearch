@@ -8,6 +8,7 @@ public class Node {
 		col = c;
 		type = t;
 		parent = null;
+		g = 999;
 		//type 0 is traverseable, 1 is not, 2 is start, 3 is goal
 	}
 	

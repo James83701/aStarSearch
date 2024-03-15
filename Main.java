@@ -7,7 +7,7 @@ public class Main {
 
         board.printBoard();
         
-        AI ai = new AI(board.getStartNode(), board, board.getBoardArr());
+        AI ai = new AI(board.getStartNode(), board, board.getBoardArr(), board.getGoalNode());
         ai.nextStep();
         
         
