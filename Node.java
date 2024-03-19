@@ -2,7 +2,7 @@ public class Node {
 	
 	private int row, col, f, g, h, type;
 	private Node parent;
-   
+    
 	public Node(int r, int c, int t){
 		row = r;
 		col = c;
@@ -19,6 +19,9 @@ public class Node {
 	}
 	public void setH(int value){
 		h = value;
+	}
+	public void setF(int value){
+		f = value;
 	}
 	public void setParent(Node n){
 		parent = n;
@@ -59,7 +62,7 @@ public class Node {
 		
 		return row == n.getRow() && col == n.getCol();
 	}
-   
+    
 	public String toString(){
 		return "Node: " + row + "_" + col;
 	}

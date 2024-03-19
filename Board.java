@@ -52,6 +52,7 @@ public class Board {
         int row = rand.nextInt(15);
         boardArr[row][col].setType(2);
         start = boardArr[row][col];
+        boardArr[row][col].setF(0);
         boardArr[row][col].setG(0);
     }
 
