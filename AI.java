@@ -1,15 +1,23 @@
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.lang.Math;
+import java.util.Scanner;
+import java.util.Set;
 
 public class AI {
-    ArrayList<Node> closed = new ArrayList<Node>();
-    ArrayList<Node> open = new ArrayList<Node>();
+    //ArrayList<Node> closed = new ArrayList<Node>();
+    //ArrayList<Node> open = new ArrayList<Node>();
     Node currentNode;
     Node startNode;
     Board board;
     Node[][] boardArr;
     Node goalNode;
+    ArrayList<Node> victoryPathInOrder = new ArrayList<Node>();
+
+    Set<Node> open = new HashSet<Node> ();
+    Set<Node> closed = new HashSet<Node> ();
+    
 
     AI(Node startNode, Board board, Node[][] boardArr, Node goalNode) {
         currentNode = startNode;
@@ -21,12 +29,14 @@ public class AI {
     }
 
     public void findNextNode() {
-        while (open.get(0) != null) {
+        
+        while (!open.isEmpty()) {
 
+            
             open.remove(currentNode);
 
             closed.add(currentNode);
-
+            
             ArrayList<Node> adjNodes = getAdjNodes(currentNode);
 
 
@@ -37,17 +47,28 @@ public class AI {
             currentNode = findLowestCostNode();
 
         }
+        // if (currentNode.getType() != 3) {
+        //     System.out.println("no path found");
+        // }
         Node iterNode = currentNode;
         ArrayList<Node> victoryPath = new ArrayList<Node>();
-        System.out.print(currentNode + " ");
+        
         while (iterNode.getParent() != null) {
 
-            System.out.print(iterNode.getParent() + " ");
+            
             victoryPath.add(iterNode);
             iterNode = iterNode.getParent();
 
         }
-        System.out.println(victoryPath);
+
+        for(int i = victoryPath.size(); i>0; i-- ){
+            Node node = victoryPath.get(i-1);
+            boardArr[node.getRow()][node.getCol()].setOnVictoryPath(true);
+            boardArr[node.getRow()][node.getCol()].setVictoryPathValue(victoryPath.size() - i + 1);
+            victoryPathInOrder.add(node);
+        }
+        board.printBoard();
+        System.out.println("victory path: " + victoryPathInOrder);
     }
 
     public Boolean generateSuccesors(ArrayList<Node> adjNodes) {
@@ -56,7 +77,6 @@ public class AI {
             node.setParent(currentNode);
 
             if (node.getCol() == goalNode.getCol() && node.getRow() == goalNode.getRow()) {
-                System.out.println("GOAL!!!!!!!!!!!!");
                 return true;
             } else {
                 // calculates cost
@@ -96,7 +116,7 @@ public class AI {
 
     public Node findLowestCostNode() {
         
-        Node lowestCostNode = open.get(0);
+        Node lowestCostNode = open.iterator().next();
         // lowestCostNode = q
         for (Node node : open) {
             if (lowestCostNode.getF() > node.getF()) {
@@ -147,6 +167,8 @@ public class AI {
         if (validateNodeRange(node.getRow(), node.getCol() - 1)) {
             adjNodes.add(boardArr[node.getRow()][node.getCol() - 1]);
         }
+
+        
 
         return adjNodes;
     }
